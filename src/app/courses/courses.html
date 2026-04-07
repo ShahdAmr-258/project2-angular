@@ -1,0 +1,49 @@
+
+<h1>Available Courses</h1>
+
+
+<label for="category">Filter by Category: </label>
+<select id="category" [(ngModel)]="selectedCategory">
+  <option value="All">All</option>
+  <option value="Programming">Programming</option>
+  <option value="Design">Design</option>
+  <option value="Marketing">Marketing</option>
+  <option value="Business">Business</option>
+</select>
+
+
+<div class="courses-grid">
+  @for (course of filteredCourses; track course.id) {
+    <div class="course-card"
+         [ngClass]="{ 'full': course.seats === 0 }"
+         [ngStyle]="{ 'background-color': course.seats <= 2 ? '#fff59d' : '#f8f9fa' }">
+
+      
+      <img [src]="course.Image" alt="{{ course.title }}" class="course-img">
+
+      
+      <h2>{{ course.title }}</h2>
+      <p><strong>Instructor:</strong> {{ course.instructor }}</p>
+      <p><strong>Price:</strong> {{ course.price }} EGP</p>
+      <p><strong>Seats Available:</strong> {{ course.seats }}</p>
+
+  
+      @if (course.seats <= 2 && course.seats > 0) {
+        <p class="almost-full">Almost Full</p>
+      }
+
+     
+      @if (course.seats === 0) {
+        <p class="full-text">Course Full</p>
+      }
+
+      
+      <button 
+        (click)="register(course)" 
+        [disabled]="course.seats === 0"
+        class="register-btn">
+        Register
+      </button>
+    </div>
+  }
+</div>
